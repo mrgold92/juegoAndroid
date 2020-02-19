@@ -56,7 +56,7 @@ public class EnemigoEntity extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        setPosition((body.getPosition().x - 0.5f) * 45f, (body.getPosition().y - 0.5f) * 45f);
+        setPosition((body.getPosition().x - 0.5f) * 50f, (body.getPosition().y - 0.5f) * 50f);
 
         batch.draw(textura, getX(), getY(), getWidth(), getHeight());
     }

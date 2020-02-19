@@ -25,7 +25,6 @@ class GameScreen extends BaseScreen {
     private World world;
     private PlayerEntity player;
     private EnemigoEntity enemigo;
-    private LaserEntity laser;
     private AliadoEntity aliado;
     private ColisionadorEnemigos[] colisionadorEnemigos;
     private SpriteBatch batch;
@@ -53,15 +52,14 @@ class GameScreen extends BaseScreen {
 
         Texture texturaPlayer = game.getManager().get("player.png");
         Texture texturaEnemigo = game.getManager().get("enemigo.png");
-        Texture texturaLaserEnemigo = game.getManager().get("laserEnemigo.png");
+
         Texture texturaAliado = game.getManager().get("aliado.png");
 
         //new entities
-        laser = new LaserEntity(texturaLaserEnemigo, world, new Vector2(8f, 4.0f));
-        player = new PlayerEntity(texturaPlayer, world, new Vector2(0.90f, 0.90f));
+
+        player = new PlayerEntity(texturaPlayer, world, new Vector2(0.90f, 0.90f), game);
         enemigo = new EnemigoEntity(texturaEnemigo, world, new Vector2(3.40f, 10.0f));
         aliado = new AliadoEntity(texturaAliado, world, new Vector2(7f, 4.0f));
-
 
 
         colisionadorEnemigos = new ColisionadorEnemigos[4];
@@ -72,7 +70,7 @@ class GameScreen extends BaseScreen {
 
         stage.addActor(player);
         stage.addActor(enemigo);
-        stage.addActor(laser);
+
         stage.addActor(aliado);
 
         for (ColisionadorEnemigos c : colisionadorEnemigos) {
@@ -115,13 +113,12 @@ class GameScreen extends BaseScreen {
                     enemigo.remove();
                 } else if (areCollider(contact, "player", "enemigo")) {
                     enemigo.remove();
-                } else if (areCollider(contact, "laser", "player")) {
-                    //player.stop();
-                    laser.remove();
-                } else if (areCollider(contact, "aliado", "enemigo")) {
-
                 } else if (areCollider(contact, "aliado", "colisionadorEnemigos")) {
                     aliado.setLimite(true);
+                } else if (areCollider(contact, "laser", "enemigo")) {
+                    enemigo.remove();
+                    player.removeLaser();
+                    System.out.println("chocan");
                 }
             }
 
@@ -154,7 +151,7 @@ class GameScreen extends BaseScreen {
             e.detach();
         }
         enemigo.detach();
-        laser.detach();
+
         aliado.detach();
     }
 

@@ -50,14 +50,15 @@ public class LaserEntity extends Actor {
 
         float scala = .1f;
         loader.attachFixture(body, "laser", fixture, scala);
-        setSize(50f, 20f);
+        setSize(50f, 50f);
 
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        setPosition((body.getPosition().x) * 45f, (body.getPosition().y) * 45f);
+
+        setPosition((body.getPosition().x - 0.5f) * 50f, (body.getPosition().y - 0.5f) * 50f);
         batch.draw(textura, getX(), getY(), getWidth(), getHeight());
 
     }
@@ -72,7 +73,7 @@ public class LaserEntity extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        body.setLinearVelocity(0, -1.9f);
+        body.setLinearVelocity(0, 1.9f);
     }
 
     public void die() {
