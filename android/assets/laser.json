@@ -2,7 +2,7 @@
   "rigidBodies": [
     {
       "name": "laser",
-      "imagePath": "juegoConCarlos/android/assets/laser_enemigo.png",
+      "imagePath": "juegoConCarlos/android/assets/laserEnemigo.png",
       "origin": {
         "x": 0,
         "y": 0

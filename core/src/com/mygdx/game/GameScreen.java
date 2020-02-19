@@ -36,7 +36,7 @@ class GameScreen extends BaseScreen {
         texturaFondo = new Texture(Gdx.files.internal("fondoJuego.jpg"));
 
         stage = new Stage(new FitViewport(640, 320));
-        world = new World(new Vector2(0, -10), true);
+        world = new World(new Vector2(0, 0), true);
 
 
     }
@@ -55,7 +55,7 @@ class GameScreen extends BaseScreen {
 
         //new entities
         laser = new LaserEntity(texturaLaserEnemigo, world, new Vector2(200f, 50f));
-       /* player = new PlayerEntity(texturaPlayer, world, new Vector2(0.90f, 0.90f));
+        player = new PlayerEntity(texturaPlayer, world, new Vector2(0.90f, 0.90f));
         enemigo = new EnemigoEntity(texturaEnemigo, world, new Vector2(3.40f, 10.0f));
 
 
@@ -72,7 +72,7 @@ class GameScreen extends BaseScreen {
 
         for (ColisionadorEnemigos c : colisionadorEnemigos) {
             stage.addActor(c);
-        }*/
+        }
         stage.addActor(laser);
     }
 
@@ -136,11 +136,11 @@ class GameScreen extends BaseScreen {
     public void hide() {
 
         super.hide();
-        /*player.detach();
+        player.detach();
         for (ColisionadorEnemigos e : colisionadorEnemigos) {
             e.detach();
         }
-        enemigo.detach();*/
+        enemigo.detach();
         laser.detach();
     }
 

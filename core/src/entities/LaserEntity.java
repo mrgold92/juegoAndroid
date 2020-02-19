@@ -7,9 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.BodyEditorLoader;
+
+import java.security.acl.LastOwnerException;
 
 
 public class LaserEntity extends Actor {
@@ -34,8 +38,6 @@ public class LaserEntity extends Actor {
         BodyDef def = new BodyDef();
         def.position.set(posicion.x, posicion.y);
         def.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(def);
-        body.setUserData("laser");
 
 
         //forma
@@ -45,9 +47,12 @@ public class LaserEntity extends Actor {
         fixture.restitution = 0.5f;
 
 
-        float scala = .1f;
+        float scala = -10f;
+        setSize(50, 30f);
+
+        body = world.createBody(def);
+        body.setUserData("laser");
         loader.attachFixture(body, "laser", fixture, scala);
-        setSize(50f, 50f);
 
 
     }
@@ -63,6 +68,7 @@ public class LaserEntity extends Actor {
 
     public void detach() {
         world.destroyBody(body);
+        fixture.shape.dispose();
 
 
     }
@@ -75,5 +81,6 @@ public class LaserEntity extends Actor {
         body.setLinearVelocity(2f, 0);
 
     }
+
 
 }
