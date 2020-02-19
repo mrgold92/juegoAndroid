@@ -15,6 +15,7 @@ public class MainGame extends Game {
         manager.load("player.png", Texture.class);
         manager.load("enemigo.png", Texture.class);
         manager.load("laserEnemigo.png", Texture.class);
+        manager.load("aliado.png", Texture.class);
 
         manager.finishLoading();
 

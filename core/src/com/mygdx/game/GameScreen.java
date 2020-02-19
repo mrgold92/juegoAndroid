@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import entities.AliadoEntity;
 import entities.ColisionadorEnemigos;
 import entities.EnemigoEntity;
 import entities.LaserEntity;
@@ -25,6 +26,7 @@ class GameScreen extends BaseScreen {
     private PlayerEntity player;
     private EnemigoEntity enemigo;
     private LaserEntity laser;
+    private AliadoEntity aliado;
     private ColisionadorEnemigos[] colisionadorEnemigos;
     private SpriteBatch batch;
     private Texture texturaFondo;
@@ -52,11 +54,13 @@ class GameScreen extends BaseScreen {
         Texture texturaPlayer = game.getManager().get("player.png");
         Texture texturaEnemigo = game.getManager().get("enemigo.png");
         Texture texturaLaserEnemigo = game.getManager().get("laserEnemigo.png");
+        Texture texturaAliado = game.getManager().get("aliado.png");
 
         //new entities
-        laser = new LaserEntity(texturaLaserEnemigo, world, new Vector2(200f, 50f));
+        laser = new LaserEntity(texturaLaserEnemigo, world, new Vector2(8f, 4.0f));
         player = new PlayerEntity(texturaPlayer, world, new Vector2(0.90f, 0.90f));
         enemigo = new EnemigoEntity(texturaEnemigo, world, new Vector2(3.40f, 10.0f));
+        aliado = new AliadoEntity(texturaAliado, world, new Vector2(7f, 4.0f));
 
 
 
@@ -68,12 +72,13 @@ class GameScreen extends BaseScreen {
 
         stage.addActor(player);
         stage.addActor(enemigo);
-
+        stage.addActor(laser);
+        stage.addActor(aliado);
 
         for (ColisionadorEnemigos c : colisionadorEnemigos) {
             stage.addActor(c);
         }
-        stage.addActor(laser);
+
     }
 
     @Override
@@ -110,14 +115,22 @@ class GameScreen extends BaseScreen {
                     enemigo.remove();
                 } else if (areCollider(contact, "player", "enemigo")) {
                     enemigo.remove();
-                } else if (areCollider(contact, "player", "laser")) {
-                    player.stop();
+                } else if (areCollider(contact, "laser", "player")) {
+                    //player.stop();
+                    laser.remove();
+                } else if (areCollider(contact, "aliado", "enemigo")) {
+
+                } else if (areCollider(contact, "aliado", "colisionadorEnemigos")) {
+                    aliado.setLimite(true);
                 }
             }
 
             @Override
             public void endContact(Contact contact) {
-
+                if (areCollider(contact, "aliado", "colisionadorEnemigos")) {
+                    aliado.setLimite(false);
+                    aliado.movement = 1.9f;
+                }
             }
 
             @Override
@@ -142,6 +155,7 @@ class GameScreen extends BaseScreen {
         }
         enemigo.detach();
         laser.detach();
+        aliado.detach();
     }
 
     @Override

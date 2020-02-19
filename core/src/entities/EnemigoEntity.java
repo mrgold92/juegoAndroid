@@ -41,6 +41,7 @@ public class EnemigoEntity extends Actor {
         fixture = body.createFixture(enemigoShape, 1);
         fixture.setUserData("enemigo");
         enemigoShape.dispose();*/
+
         FixtureDef fixture = new FixtureDef();
         fixture.density = 1;
         fixture.friction = 0.5f;
@@ -69,7 +70,9 @@ public class EnemigoEntity extends Actor {
     public void act(float delta) {
         super.act(delta);
 
+
         body.setLinearVelocity(0, -1.9f);
+
 
     }
 
@@ -80,5 +83,6 @@ public class EnemigoEntity extends Actor {
 
 
     }
+
 
 }
